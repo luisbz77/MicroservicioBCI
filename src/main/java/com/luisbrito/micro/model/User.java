@@ -10,12 +10,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
 @ToString
-@Table(name = "user",uniqueConstraints = {@UniqueConstraint(columnNames={"email"})})
 public class User {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private UUID id;

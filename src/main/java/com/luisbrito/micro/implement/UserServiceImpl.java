@@ -9,18 +9,25 @@ import com.luisbrito.micro.service.UserService;
 import com.luisbrito.micro.utils.UserUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+@Service
 public class UserServiceImpl implements UserService{
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
+    @Autowired
     private UserRepository userRepository;
-    private final UserUtils userUtils;
+
+    @Autowired
+    private UserUtils userUtils;
 
     public UserServiceImpl(UserRepository userRepository, UserUtils userUtils) {
         this.userRepository = userRepository;
@@ -59,7 +66,9 @@ public class UserServiceImpl implements UserService{
         UserEntity userEntity = userRepository.findByEmail(user.getEmail());
         if (Objects.nonNull(userEntity))
             return null;
-        return userRepository.save(user);
+
+        return userUtils.toModel(userRepository.save(userUtils.toEntity(user)));
+
        /* Optional.ofNullable(user.getEmail())
                 .map(authenticationGateway::authorize)
                 .ifPresent(user::setToken);

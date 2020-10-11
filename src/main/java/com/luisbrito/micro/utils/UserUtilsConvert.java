@@ -5,12 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.luisbrito.micro.entity.UserEntity;
 import com.luisbrito.micro.exceptions.PhoneException;
 import com.luisbrito.micro.model.User;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Optional;
 
+@Service
 public class UserUtilsConvert implements UserUtils{
     private ObjectMapper objectMapper;
 
@@ -38,7 +40,7 @@ public class UserUtilsConvert implements UserUtils{
     }
 
     @Override
-    public User toModel(UserEntity userEntity) throws IOException {
+    public User toModel(UserEntity userEntity){
         try {
             return User.builder()
                     .id(userEntity.getId())

@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, UUID> {
+public interface UserRepository extends CrudRepository<UserEntity, UUID> {
 
     UserEntity findByEmail(String email);
 

@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -22,7 +24,7 @@ public class AppController {
     private UserService userService;
 
     @PostMapping("/login")
-    public User doLogin(@RequestBody LoginRequest loginRequest){return loginUserService.doLogin(loginRequest);
+    public User doLogin(@RequestBody LoginRequest loginRequest) throws IOException {return loginUserService.doLogin(loginRequest);
     }
 
     @PostMapping("/create")
