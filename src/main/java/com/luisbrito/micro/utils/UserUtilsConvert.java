@@ -51,8 +51,8 @@ public class UserUtilsConvert implements UserUtils{
                     .created(Optional.ofNullable(userEntity.getCreated()).orElse(new Timestamp(System.currentTimeMillis())))
                     .modified(Optional.ofNullable(userEntity.getModified()).orElse(new Timestamp(System.currentTimeMillis())))
                     .lastLogin(Optional.ofNullable(userEntity.getLastLogin()).orElse(new Timestamp(System.currentTimeMillis())))
-                    .token(userEntity.getToken())
                     .isActive(true)
+                    .token(userEntity.getToken())
                     .build();
         }catch(JsonProcessingException e){
             throw new PhoneException();

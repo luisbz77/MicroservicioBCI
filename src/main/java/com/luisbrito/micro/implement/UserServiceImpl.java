@@ -1,18 +1,20 @@
 package com.luisbrito.micro.implement;
 
 import com.luisbrito.micro.entity.UserEntity;
+import com.luisbrito.micro.exceptions.InvalidEmailException;
+import com.luisbrito.micro.exceptions.InvalidFormatException;
 import com.luisbrito.micro.exceptions.PasswordNotMatchException;
 import com.luisbrito.micro.exceptions.UserNotFoundException;
 import com.luisbrito.micro.model.User;
 import com.luisbrito.micro.repository.UserRepository;
 import com.luisbrito.micro.service.UserService;
+import com.luisbrito.micro.service.AuthenticationService;
 import com.luisbrito.micro.utils.UserUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -27,18 +29,13 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
 
     @Autowired
-    private UserUtils userUtils;
+    private UserUtils  userUtils;
 
-    public UserServiceImpl(UserRepository userRepository, UserUtils userUtils) {
-        this.userRepository = userRepository;
-        this.userUtils = userUtils;
-    }
-
+    @Autowired
+    private AuthenticationService authenticationService;
 
     @Override
     public User authenticate(String email, String password) {
-        logger.info("email: {}",email);
-        logger.info("password: {}",password);
         UserEntity userEntity = userRepository.findByEmail(email);
         if(Objects.isNull(userEntity))
             throw new UserNotFoundException();
@@ -63,20 +60,22 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User createdUser(User user) {
+        validate(user);
         UserEntity userEntity = userRepository.findByEmail(user.getEmail());
         if (Objects.nonNull(userEntity))
             return null;
-
-        return userUtils.toModel(userRepository.save(userUtils.toEntity(user)));
-
-       /* Optional.ofNullable(user.getEmail())
-                .map(authenticationGateway::authorize)
+        Optional.ofNullable(user.getEmail())
+                .map(authenticationService::authorize)
                 .ifPresent(user::setToken);
-        return userMapper.toModel(userRepository.save(userMapper.toEntity(user)));¨*/
+        return userUtils.toModel(userRepository.save(userUtils.toEntity(user)));
     }
 
-    @Override
-    public User updateUser(User user) {
-        return null;
+    private void validate(User user){
+        logger.info("Email user: {}",user.getEmail());
+        if (!this.validEmail(user.getEmail()))
+            throw new InvalidEmailException();
+        logger.info("Password user: {}",user.getPassword());
+        if (!this.validPassword(user.getPassword()))
+            throw new InvalidFormatException();
     }
 }

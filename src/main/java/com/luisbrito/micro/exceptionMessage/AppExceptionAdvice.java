@@ -33,7 +33,7 @@ public class AppExceptionAdvice {
     public ResponseEntity<Map<String,String>> handlerInvalidFormatException(){
 
         Map<String,String> map = new HashMap<>();
-        map.put("message","Incorrect password format");
+        map.put("mensaje","Formato de contraseña incorrecto");
         return new ResponseEntity<>(map, HttpStatus.BAD_GATEWAY);
     }
 
@@ -41,7 +41,7 @@ public class AppExceptionAdvice {
     public ResponseEntity<Map<String,String>> handlerUserNotFoundException(){
 
         Map<String,String> map = new HashMap<>();
-        map.put("message","User not found");
+        map.put("mensaje","Usuario no encontrado");
         return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
     }
 
@@ -49,7 +49,7 @@ public class AppExceptionAdvice {
     public ResponseEntity<Map<String,String>> handlerUserIsNullExeption(){
 
         Map<String,String> map = new HashMap<>();
-        map.put("message","User null");
+        map.put("mensaje","Usuario nulo");
         return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
     }
 
@@ -57,7 +57,7 @@ public class AppExceptionAdvice {
     public ResponseEntity<Map<String,String>> handlerPasswordNotMatchException(){
 
         Map<String,String> map = new HashMap<>();
-        map.put("message","Wrong password");
+        map.put("mensaje","Contraseña incorrecta");
         return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
     }
 
@@ -65,7 +65,7 @@ public class AppExceptionAdvice {
     public ResponseEntity<Map<String,String>> handlerPhoneException(){
 
         Map<String,String> map = new HashMap<>();
-        map.put("message","Phones could not be processed");
+        map.put("mensaje","No se pudieron procesar los teléfonos");
         return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
     }
 

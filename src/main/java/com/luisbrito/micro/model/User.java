@@ -27,8 +27,8 @@ public class User {
     @JsonProperty(value = "last_login")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Timestamp lastLogin;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String token;
     @JsonProperty(value = "isactive")
     private boolean isActive;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String token;
 }

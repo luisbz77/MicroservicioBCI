@@ -12,6 +12,4 @@ public interface UserService {
     boolean validPassword(String password);
 
     User createdUser (User user);
-
-    User updateUser (User user);
 }
