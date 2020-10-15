@@ -1,10 +1,7 @@
 package com.luisbrito.micro.implement;
 
 import com.luisbrito.micro.entity.UserEntity;
-import com.luisbrito.micro.exceptions.InvalidEmailException;
-import com.luisbrito.micro.exceptions.InvalidFormatException;
-import com.luisbrito.micro.exceptions.PasswordNotMatchException;
-import com.luisbrito.micro.exceptions.UserNotFoundException;
+import com.luisbrito.micro.exceptions.*;
 import com.luisbrito.micro.model.User;
 import com.luisbrito.micro.repository.UserRepository;
 import com.luisbrito.micro.service.UserService;
@@ -63,7 +60,7 @@ public class UserServiceImpl implements UserService{
         validate(user);
         UserEntity userEntity = userRepository.findByEmail(user.getEmail());
         if (Objects.nonNull(userEntity))
-            return null;
+            throw new UserExistException();
         Optional.ofNullable(user.getEmail())
                 .map(authenticationService::authorize)
                 .ifPresent(user::setToken);
